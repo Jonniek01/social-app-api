@@ -60,6 +60,7 @@ module.exports = {
 
 
     },
+    /*DELTE won't work due to foreign key straint, Will have to create appropriate trigers*/
     deleteUser: async(req, res)=>{
         const {id} = req.params;
         let pool = await poolPromise();

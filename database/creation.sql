@@ -1,0 +1,43 @@
+CREATE DATABASE socialapi
+
+USE socialapi
+
+CREATE TABLE users(
+    id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    datetime DATETIME DEFAULT GETDATE()
+)
+SELECT * FROM users
+
+CREATE TABLE posts(
+    id VARCHAR(255) PRIMARY KEY,
+    creator_id VARCHAR(255) FOREIGN KEY REFERENCES users(id),
+    content VARCHAR(6000) NOT NULL,
+    datetime DATETIME DEFAULT GETDATE()
+
+)
+
+SELECT * FROM posts
+
+CREATE TABLE comments(
+     id VARCHAR(255) PRIMARY KEY,
+    creator_id VARCHAR(255) FOREIGN KEY REFERENCES users(id),
+    post_id VARCHAR(255) FOREIGN KEY REFERENCES posts(id),
+    content VARCHAR(6000) NOT NULL,
+    datetime DATETIME DEFAULT GETDATE()
+   
+)
+SELECT * FROM comments
+
+CREATE TABLE replies(
+    id VARCHAR(255) PRIMARY KEY,
+    creator_id VARCHAR(255) FOREIGN KEY REFERENCES users(id),
+    comment_id VARCHAR(255) FOREIGN KEY REFERENCES comments(id),
+    content VARCHAR(6000) NOT NULL,
+    datetime DATETIME DEFAULT GETDATE()
+)
+
+SELECT * FROM replies
+
