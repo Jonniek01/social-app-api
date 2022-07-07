@@ -3,6 +3,8 @@ const cors = require('cors');
 require('dotenv').config()
 const  {users} = require('./routes/users.js')
 const  {auth} = require('./routes/auth.js')
+const  {posts} = require('./routes/posts.js')
+
 
 
 const app = express()
@@ -17,6 +19,8 @@ app.get('/',(req,res)=>{
 })
 app.use('/users', users);
 app.use('/auth', auth);
+app.use('/posts', posts);
+
 
 
 

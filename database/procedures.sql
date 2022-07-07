@@ -39,4 +39,22 @@ DELETE FROM users WHERE id=@uid
 END
 EXEC deleteuser 'u1'
 
+
+---
+
+CREATE PROCEDURE patchpost
+    @uid VARCHAR(255),
+    @ncontent  VARCHAR(255)
+    
+AS
+BEGIN
+UPDATE posts
+SET
+content=@ncontent
+WHERE
+id=@uid
+END
+
+EXEC patchpost 'p1', 'new content'
 */
+
