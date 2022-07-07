@@ -88,13 +88,13 @@ deleteComment: async(req, res)=>{
 },
 
 
-getCommentsByCreator: async(req, res)=>{
-    //CREATOR ID FROM BODY
+getCommentsByPost: async(req, res)=>{
+    //POST ID FROM BODY
     const {id} = req.body
 
     
     let pool = await poolPromise()
-    pool.query(`select * FROM comments WHERE creator_id='${id}'`).then(results=>{
+    pool.query(`select * FROM comments WHERE post_id='${id}'`).then(results=>{
         let post=results.recordset
         if(post.length>0){
             return res.status(200).json({
@@ -106,7 +106,7 @@ getCommentsByCreator: async(req, res)=>{
             res.status(404).json({
                 status:404,
                 success: false,
-                message: "NO COMMENTS FROM THIS USER OR USER DOES NOT EXIST",
+                message: "NO COMMENTS FOR THIS POST OR POST DOES NOT EXIST",
                 results:{}})
                 }
 
