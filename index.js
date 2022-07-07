@@ -5,9 +5,9 @@ const  {users} = require('./routes/users.js')
 const  {auth} = require('./routes/auth.js')
 const  {posts} = require('./routes/posts.js')
 const  {comments} = require('./routes/comments.js')
+const  {replies} = require('./routes/replies.js')
 
-posts
-posts
+
 
 
 const app = express()
@@ -23,6 +23,8 @@ app.use('/users', users);
 app.use('/auth', auth);
 app.use('/posts', posts);
 app.use('/comments', comments);
+app.use('/replies', replies);
+
 
 
 
