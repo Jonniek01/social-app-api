@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require('cors');
 require('dotenv').config()
 const  {users} = require('./routes/users.js')
+const  {auth} = require('./routes/auth.js')
+
 
 const app = express()
 app.use(express.json())
@@ -14,6 +16,8 @@ app.get('/',(req,res)=>{
     res.send("USERS APP")
 })
 app.use('/users', users);
+app.use('/auth', auth);
+
 
 
 app.get('*',(req,res)=>{

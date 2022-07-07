@@ -24,7 +24,7 @@ END
 EXEC patchuser 'john@gmail.com', 'jonniu','u1'
 
 --
-*/
+--CREATE TRIGERS FOR THIS ENDPOINT TO WORK
 CREATE PROCEDURE deleteuser
     @uid VARCHAR(255)
     
@@ -38,3 +38,5 @@ DELETE FROM users WHERE id=@uid
 
 END
 EXEC deleteuser 'u1'
+
+*/
