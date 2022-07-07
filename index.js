@@ -4,7 +4,10 @@ require('dotenv').config()
 const  {users} = require('./routes/users.js')
 const  {auth} = require('./routes/auth.js')
 const  {posts} = require('./routes/posts.js')
+const  {comments} = require('./routes/comments.js')
 
+posts
+posts
 
 
 const app = express()
@@ -13,13 +16,14 @@ app.use(cors());
 
 const PORT = process.env.PORT
 
-
 app.get('/',(req,res)=>{
     res.send("USERS APP")
 })
 app.use('/users', users);
 app.use('/auth', auth);
 app.use('/posts', posts);
+app.use('/comments', comments);
+
 
 
 
