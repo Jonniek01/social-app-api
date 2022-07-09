@@ -1,9 +1,8 @@
 module.exports={
      checkAuth:(req,res,next)=>{
-        let session = {
-            loggedIn:false
-        }
-        if(session.loggedIn){
+        console.log(req.session)
+   
+        if(req.session.loggedIn){
             next()
             return
         }

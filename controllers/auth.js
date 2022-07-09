@@ -6,18 +6,27 @@ module.exports = {
         const {email, password} = req.body
         let pool = await poolPromise()
         pool.query(`select * FROM users WHERE email='${email}'`).then(results=>{
+
             let user=results.recordset[0]
             if(user){
                 let pass=user.password
                 if(password===pass){
+                    req.session.loggedIn=true
+                    req.session.user=user
+
+                    
+
                         return res.status(200).json({
                             status:200,
                             success: true,
                             message: "Logged in successfully",
-                            results:user})
+                            results:req.session.user=user
+                        })
 
                 }
                 else{
+                    console.log("sess2:", req.session.loggedIn)
+
                     return  res.status(401).json({
                             status:401,
                             success: false,

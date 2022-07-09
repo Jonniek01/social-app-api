@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 require('dotenv').config()
+const session = require('express-session')
 const {checkAuth} = require ("./middleware/checkAuth.js");
 const {handler} = require   ("./middleware/handler.js");
 
@@ -17,6 +18,12 @@ const app = express()
 app.use(express.json())
 app.use(cors());
 app.use(handler)
+app.use(session({
+    secret:"secret key",
+    resave:false,
+    saveUninitialized:false,
+    loggedIn:false
+}))
 
 const PORT = process.env.PORT
 
