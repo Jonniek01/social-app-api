@@ -80,6 +80,16 @@ module.exports = {
                             })
 
                             
-     } 
+     } ,
+     logOut: (req, res,)=>{
+        req.session.loggedIn=false
+        res.send(
+            {
+                loggedIn:req.session.loggedIn,
+                success:true,
+                message:"You are now logged out"
+            }
+        )
+    }
 
 }
