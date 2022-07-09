@@ -1,6 +1,9 @@
 const express = require("express");
 const cors = require('cors');
 require('dotenv').config()
+const {checkAuth} = require ("./middleware/checkAuth.js");
+const {handler} = require   ("./middleware/handler.js");
+
 const  {users} = require('./routes/users.js')
 const  {auth} = require('./routes/auth.js')
 const  {posts} = require('./routes/posts.js')
@@ -13,17 +16,19 @@ const  {replies} = require('./routes/replies.js')
 const app = express()
 app.use(express.json())
 app.use(cors());
+app.use(handler)
 
 const PORT = process.env.PORT
 
 app.get('/',(req,res)=>{
-    res.send("USERS APP")
+    res.send("SOCIAL API")
 })
-app.use('/users', users);
 app.use('/auth', auth);
-app.use('/posts', posts);
-app.use('/comments', comments);
-app.use('/replies', replies);
+
+app.use('/users', checkAuth, users);
+app.use('/posts', checkAuth, posts);
+app.use('/comments',checkAuth, comments);
+app.use('/replies',checkAuth, replies);
 
 
 
