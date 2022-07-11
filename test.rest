@@ -48,13 +48,13 @@ GET http://localhost:5000/comments
 GET http://localhost:5000/comments/c7
 ###
     #create comment
-POST http://localhost:5000/comments/create
+POST http://localhost:5000/comments/create/
 
 Content-Type: application/json
 
-{ "name":"Eliud",
-    "email": "elly45@gmail.com",
-"password": "j123"
+{ 
+    "id":"c25",
+    "content":"Hellooo Rest"
 }
 
 

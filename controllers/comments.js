@@ -121,7 +121,7 @@ create: async(req, res)=>{
         let pool = await poolPromise()
    
         pool.query(`insert into comments (creator_id, content)
-                    VALUES('${id}', '${id}')`)
+                    VALUES('${id}', '${content}')`)
                     .then(results=>{
                         if(results.rowsAffected){
                             return res.status(200).json({

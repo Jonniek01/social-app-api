@@ -7,7 +7,7 @@ comments.get('/:id', getComment)
 comments.patch('/:id', patchComment)
 comments.delete('/:id', deleteComment)
 comments.post('/', getCommentsByPost)
-comments.post('/create', create)
+comments.post('/create/:id', create)
 
 
 
