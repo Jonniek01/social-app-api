@@ -7,8 +7,6 @@ module.exports = {
 
     logIn: async (req, res)=>{
         let pool = await poolPromise();
-
-       
         await loginValidator.validateAsync(req.body).then(result=>{
             const {email, password}=result;
             pool.query(`select * FROM users WHERE email='${email}'`).then(results=>{
@@ -31,8 +29,6 @@ module.exports = {
     
                     }
                     else{
-                        console.log("sess2:", req.session.loggedIn)
-    
                         return  res.status(401).json({
                                 status:401,
                                 success: false,
@@ -77,9 +73,7 @@ module.exports = {
     /*SIGN UP MIDDLEWARE*/
 
     create: async(req, res)=>{
-        let data=req.body;
         let pool = await poolPromise()
-
         await signupValidator.validateAsync(req.body).then(result=>{
             result.id=uuidv4()
             let {id,name,email,password} = result;
