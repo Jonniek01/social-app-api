@@ -16,6 +16,14 @@ GET http://localhost:5000/auth/logout
 
 ###
     #create
+
+POST http://localhost:5000/auth/create
+Content-Type: application/json
+
+{ "name":"peter",
+    "email": "jojkkkkk@gmail.com",
+"password": "j123"
+}
 ###
 
 #USERS
