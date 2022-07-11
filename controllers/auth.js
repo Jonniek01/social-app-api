@@ -1,5 +1,5 @@
 const poolPromise = require('../config/poolPromise')
-const {loginValidator} = require('../middleware/validator')
+const {loginValidator, signupValidator} = require('../middleware/validator')
 const { v4: uuidv4 } = require('uuid')
 
 
@@ -73,54 +73,64 @@ module.exports = {
         
     },
 
+
+    /*SIGN UP MIDDLEWARE*/
+
     create: async(req, res)=>{
         let data=req.body;
-        data.id=uuidv4()
-            
-        let {id,name,email,password} = data;
-            let pool = await poolPromise()
-           pool.query(`SELECT email FROM users WHERE email='${email}'`).then(
-           result =>{
-            if(result.rowsAffected==0){
-                addUser()
-            }
-            else{
-                res.send(
-                    {
-                        status:400,
-                        message:"email already exists"
-                    }
-                )
-            }
-            
+        let pool = await poolPromise()
 
-            }
-           )
-            function addUser(){
-
-       
-            pool.query(`insert into users (id, name, email, password)
-                        VALUES('${id}', '${name}', '${email}', '${password}')`)
-                        .then(results=>{
-                            if(results.rowsAffected){
-                                return res.status(200).json({
-                                    status:200,
-                                    success: true,
-                                    message: "USER ADDED SUCCESFULLY"
-                                   })
-                            }})
-                            .catch(err=>{
-                                return res.status(400).json({
-                                    status:400,
-                                    success:false,
-                                    message: err
-                                   })
-
+        await signupValidator.validateAsync(req.body).then(result=>{
+            result.id=uuidv4()
+            let {id,name,email,password} = result;
+            //Check if user exists
+            pool.query(`SELECT email FROM users WHERE email='${email}'`).then(
+            result =>{
+                //if does not exist, insert
+                if(result.rowsAffected==0){
+                    pool.query(`insert into users (id, name, email, password)
+                    VALUES('${id}', '${name}', '${email}', '${password}')`)
+                    .then(results=>{
+                        //if insertion succesful
+                        if(results.rowsAffected){
+                            return res.status(200).json({
+                                status:200,
+                                success: true,
+                                message: "USER ADDED SUCCESFULLY"
                             })
+                        }})
+                        //else
+                        .catch(err=>{
+                            return res.status(400).json({
+                                status:400,
+                                success:false,
+                                message: err
+                            })
+
+                        })
+        }
+        //else if email already exists
+                else{
+                    res.send(
+                        {
+                            status:400,
+                            message:"email already exists"
                         }
-
-
-                            
+                    )
+                }
+                }
+            )
+        })
+//if schema validation failed
+        .catch(err=> res.status(422).json(
+            {
+                status:422,
+                success:false,
+                message:err.message
+            }
+        )
+     );
+                                    
      } ,
      logOut: (req, res,)=>{
         req.session.loggedIn=false

@@ -20,16 +20,19 @@ GET http://localhost:5000/auth/logout
 POST http://localhost:5000/auth/create
 Content-Type: application/json
 
-{ "name":"peter",
-    "email": "jojkkkkk@gmail.com",
+{ "name":"Eliud",
+    "email": "elly45@gmail.com",
 "password": "j123"
 }
 ###
 
 #USERS
     #get all users
+GET http://localhost:5000/users
 ###
     #get user by id
+GET http://localhost:5000/users/2c7ab450-72e1-4e18-b931-9c34a8fd7fe1
+
 ###
     #patch user by id
 ###
@@ -37,4 +40,3 @@ Content-Type: application/json
 ###
 
 
-http://localhost:5000/users
