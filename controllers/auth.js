@@ -53,7 +53,6 @@ module.exports = {
     
             })
     
-            console.log(result)
         })
         .catch(err=> res.status(422).json(
             {

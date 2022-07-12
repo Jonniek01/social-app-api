@@ -4,7 +4,7 @@ require('dotenv').config()
 const session = require('express-session')
 // const MSSQLStore = require('connect-mssql-v2');
 
-const {config} = require('./config/config')
+// const {config} = require('./config/config')
 // const {options} = require('./config/mssqlOptions')
 
 

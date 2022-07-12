@@ -4,8 +4,8 @@
 POST http://localhost:5000/auth/login
 Content-Type: application/json
 
-{"email": "elly45@gmail.com",
-"password": "j123"
+{"email": "mary@gmail.com",
+"password": "m123"
 }
 
 ###
@@ -48,12 +48,10 @@ GET http://localhost:5000/comments
 GET http://localhost:5000/comments/c7
 ###
     #create comment
-POST http://localhost:5000/comments/create/
-
+POST http://localhost:5000/comments/create/p1
 Content-Type: application/json
 
-{ 
-    "id":"c25",
+{  "creator_id":"u2",
     "content":"Hellooo Rest"
 }
 

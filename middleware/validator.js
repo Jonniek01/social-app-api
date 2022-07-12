@@ -22,4 +22,23 @@ module.exports={
         password:Joi.string()
         .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
     }),
+    commentValidator:Joi.object({
+        id: Joi.string()
+        .min(1)
+        .max(100)
+        .required(),
+
+        creator_id: Joi.string()
+        .min(1)
+        .max(100)
+        .required(),
+
+
+        content: Joi.string()
+        .min(1)
+        .max(100)
+        .required()
+
+
+    }),
 }

@@ -1,6 +1,6 @@
 module.exports={
      checkAuth:(req,res,next)=>{
-        console.log(req.session)
+        // console.log(req.session)
    
         if(req.session.loggedIn){
             next()

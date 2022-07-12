@@ -1,4 +1,6 @@
 const poolPromise = require('../config/poolPromise')
+const {commentValidator} = require('../middleware/validator')
+
 const { v4: uuidv4 } = require('uuid')
 
 
@@ -116,31 +118,81 @@ getCommentsByPost: async(req, res)=>{
             
 },
 create: async(req, res)=>{
-    const {id} = req.params;
-        //GENERATE UNIQUE COMMENT IDS IN THE DB
-            
-    let {content} = req.body;
+    const {postid} = req.params;
+    console.log('re',req.body)
         let pool = await poolPromise()
-   
-        pool.query(`insert into comments (creator_id, content)
-                    VALUES('${id}', '${content}')`)
+        /*
+        1.Validate schema
+        2.check if user has other comment on same post {post_id, creator_id}
+        3. If no previous comment, create comment
+
+        */
+       const data=req.body
+       console.log("aa",data)
+       data.id=uuidv4()
+
+       console.log("bb",data)
+
+        await commentValidator.validateAsync(data).then(result=>{
+          
+            const {id,creator_id,content } = result;
+            pool.query(`SELECT * FROM comments WHERE post_id='${postid}' AND creator_id='${creator_id};'`)
+            .then(response=>{
+                if(response.recordset==[]){
+                    //proceed to adding comment
+                    pool.query(`INSERT INTO COMMENTS (id, post_id, creator_id, content)
+                    VALUES('${id}', '${postid}', '${creator_id}', '${content}')`)
                     .then(results=>{
                         if(results.rowsAffected){
                             return res.status(200).json({
                                 status:200,
                                 success: true,
-                                message: "POST ADDED SUCCESFULLY"
+                                message: "COMMENT ADDED SUCCESFULLY"
                                })
                         }})
                         .catch(err=>{
                             return res.status(400).json({
                                 status:400,
                                 success:false,
-                                message: err
+                                message: err.message
                                })
 
                         })
 
+
+
+                }
+                else{
+                    res.json({
+                        message:"You can not comment on a post twice"
+                    })
+                }
+                
+            })
+            .catch(err=>{
+                //couldnt query db
+                res.json({
+                    message:"Unsuccesful",
+                    error:err
+
+                })
+            })
+
+
+        })
+        .catch(err=>{
+            res.status(422).json(
+                {
+                    status:422,
+                    error:"schema validation failed",
+                    message:err.message
+
+                }
+             
+            )
+        })
+
+   
                         
  } 
 
