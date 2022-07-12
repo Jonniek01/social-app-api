@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require('cors');
 require('dotenv').config()
 const session = require('express-session')
-const MSSQLStore = require('connect-mssql-v2');
+// const MSSQLStore = require('connect-mssql-v2');
 
 const {config} = require('./config/config')
-const {options} = require('./config/mssqlOptions')
+// const {options} = require('./config/mssqlOptions')
 
 
 const {checkAuth} = require ("./middleware/checkAuth.js");
@@ -31,8 +31,7 @@ app.use(session({
     resave:false,
     saveUninitialized:false,
     loggedIn:false,
-    store: new MSSQLStore(config, options), // options are optional
-    secret: 'supersecret'
+    // store: new MSSQLStore(config, options)// options are optional
 
 }))
 
